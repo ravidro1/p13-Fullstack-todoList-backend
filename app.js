@@ -8,7 +8,7 @@ const app = express();
 const userController = require("./Controller/UserController");
 const itemController = require("./Controller/ItemController");
 
-app.use(cors());
+app.use(cors([process.env.FRONTEND_URL]));
 app.use(bodyParser.json());
 
 app.post("/addUser", userController.addUser);
