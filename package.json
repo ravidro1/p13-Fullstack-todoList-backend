@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest -i",
     "test-watch": "jest --watch --runInBand",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
