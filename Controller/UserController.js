@@ -31,6 +31,7 @@ exports.addUser = async (req, res) => {
 /// (username, password)
 exports.login = (req, res) => {
   try {
+    console.log("login");
     User.findOne({
       username: req.body.username,
     }).then((user) => {
@@ -44,9 +45,10 @@ exports.login = (req, res) => {
             } else {
               const token = jsonwebtoken.sign(
                 { id: user._id },
-                process.env.JWT_TOKEN
+                process.env.JWT_TOKEN,
+                { expiresIn: 100 }
               );
-              console.log(isMatch);
+              // console.log(isMatch);
               res.status(200).json({
                 message: "the password match",
                 data: user,
