@@ -64,13 +64,25 @@ exports.login = (req, res) => {
 };
 
 /// (username)
-exports.getUserByUserName = (req, res) => {
-  User.findOne({
-    username: req.body.username,
-  })
+exports.getUserByID = (req, res) => {
+  User.findById(req.userID)
     .then((user) => {
       if (!user) res.status(400).json({ message: "user not Found" });
       else res.status(200).json({ message: "user Found", data: user });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err });
+    });
+};
+
+exports.getUsername = (req, res) => {
+  User.findById(req.userID)
+    .then((user) => {
+      if (!user) res.status(400).json({ message: "user not Found" });
+      else
+        res
+          .status(200)
+          .json({ message: "user Found", username: user.username });
     })
     .catch((err) => {
       res.status(500).json({ message: err });

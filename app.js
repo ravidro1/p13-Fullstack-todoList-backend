@@ -20,6 +20,7 @@ const jwtVerify = (req, res, next) => {
       if (err) {
         res.status(400).json({ message: "Token Wrong" });
       } else {
+        req.userID = decoded.id;
         next();
       }
     });
@@ -31,16 +32,15 @@ app.get("/isTokenValid", jwtVerify, (req, res) => {
   res.status(200).json({ message: "TokenValid" });
 });
 
-
-
 app.post("/addUser", userController.addUser);
 app.post("/login", userController.login);
-app.post("/getUserByUsername", jwtVerify, userController.getUserByUserName);
+app.get("/getUserById", jwtVerify, userController.getUserByID);
+app.get("/getUsername", jwtVerify, userController.getUsername);
 
 app.post("/addTask", jwtVerify, itemController.addItem);
 app.post("/editTask", jwtVerify, itemController.edit);
-app.post("/getAllTasks", jwtVerify, itemController.getAll);
-app.post("/getAllForUser", jwtVerify, itemController.getAllForUser);
+app.get("/getAllTasks", jwtVerify, itemController.getAll);
+app.get("/getAllForUser", jwtVerify, itemController.getAllForUser);
 app.post("/deleteTask", jwtVerify, itemController.delete);
 
 module.exports = app;

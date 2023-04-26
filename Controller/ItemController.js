@@ -39,9 +39,8 @@ exports.getAll = (req, res) => {
 
 /// (creatorRef)
 exports.getAllForUser = (req, res) => {
-  const { creatorRef } = req.body;
   Item.find({
-    creatorRef,
+    creatorRef: req.userID,
   })
     .then((list) => {
       if (!list) res.status(400).json({ message: "tasks dosn't found" });
