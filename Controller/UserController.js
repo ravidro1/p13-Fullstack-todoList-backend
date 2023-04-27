@@ -2,6 +2,7 @@ const User = require("../Model/User");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 
+
 /// (username, password)
 exports.addUser = async (req, res) => {
   try {
@@ -63,7 +64,7 @@ exports.login = (req, res) => {
   }
 };
 
-/// (username)
+//// (username)
 exports.getUserByID = (req, res) => {
   User.findById(req.userID)
     .then((user) => {

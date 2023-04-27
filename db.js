@@ -6,7 +6,7 @@ function connect() {
     if (process.env.NODE_ENV == "test") {
       //   console.warn("test");
       mongoose
-        .connect(process.env.MONGO_URL, {})
+        .connect(process.env.MONGO_URL_TEST, {})
         .then(() => {
           console.log("connected");
           resolve();

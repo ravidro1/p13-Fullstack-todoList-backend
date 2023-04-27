@@ -5,6 +5,9 @@ const app = require("../app");
 const request = supertest(app);
 const { connect, close } = require("../db");
 
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExMTExMTExMTExMTExMTExMTExMTExMSIsImlhdCI6MTY4MjU1NDAxMn0.yBVt61amSiBowhmqg-TaCvJIXK_F3vDNtSZr4Efa2hI";
+
 describe("Item", () => {
   beforeAll(() => {
     connect().catch((err) => console.log(err));
@@ -24,7 +27,9 @@ describe("Item", () => {
       _id: "222222222222222222222222",
     };
 
-    const res = await request.post("/addTask").send(body);
+    const res = await request.post("/addTask").send(body).set({
+      "x-access-token": token,
+    });
 
     expect(res.statusCode).toBe(200);
   });
@@ -38,23 +43,25 @@ describe("Item", () => {
       id: "222222222222222222222222",
     };
 
-    const res = await request.post("/editTask").send(body);
+    const res = await request.post("/editTask").send(body).set({
+      "x-access-token": token,
+    });
 
     expect(res.statusCode).toBe(200);
   });
 
   test("getAll", async () => {
-    const res = await request.post("/getAllTasks").send({});
+    const res = await request.get("/getAllTasks").set({
+      "x-access-token": token,
+    });
 
     expect(res.statusCode).toBe(200);
   });
 
   test("getAllForUser", async () => {
-    const body = {
-      creatorRef: "111111111111111111111111",
-    };
-
-    const res = await request.post("/getAllForUser").send(body);
+    const res = await request.get("/getAllForUser").set({
+      "x-access-token": token,
+    });
 
     expect(res.statusCode).toBe(200);
   });
@@ -64,7 +71,9 @@ describe("Item", () => {
       id: "222222222222222222222222",
     };
 
-    const res = await request.post("/deleteTask").send(body);
+    const res = await request.post("/deleteTask").send(body).set({
+      "x-access-token": token,
+    });
 
     expect(res.statusCode).toBe(200);
   });

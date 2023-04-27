@@ -15,6 +15,17 @@ describe("User", () => {
     close().catch((err) => console.log(err));
   });
 
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExMTExMTExMTExMTExMTExMTExMTExMSIsImlhdCI6MTY4MjU1NDAxMn0.yBVt61amSiBowhmqg-TaCvJIXK_F3vDNtSZr4Efa2hI";
+
+  test("isTokenValid", async () => {
+    const res = await request.get("/isTokenValid").set({
+      "x-access-token": token,
+    });
+
+    expect(res.statusCode).toBe(200);
+  });
+
   test("addUser", async () => {
     await User.deleteMany({});
 
@@ -39,12 +50,18 @@ describe("User", () => {
     expect(res.statusCode).toBe(200);
   });
 
-  test("getUserByUserName", async () => {
-    const body = {
-      username: "1",
-    };
+  test("getUserByID", async () => {
+    const res = await request.get("/getUserByID").set({
+      "x-access-token": token,
+    });
 
-    const res = await request.post("/getUserByUserName").send(body);
+    expect(res.statusCode).toBe(200);
+  });
+
+  test("getUsername", async () => {
+    const res = await request.get("/getUsername").set({
+      "x-access-token": token,
+    });
 
     expect(res.statusCode).toBe(200);
   });
